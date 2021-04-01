@@ -54,7 +54,7 @@ namespace xls.Controllers
             string headerRange = "A1:" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + "1";
 
             excelWorksheet.Cells[headerRange].LoadFromArrays(headerRow);
-
+            
 
             for (int i = 0; i < 10; i++)
             {
@@ -62,18 +62,18 @@ namespace xls.Controllers
             }
 
             Console.WriteLine(JsonConvert.SerializeObject(envioList));
-
+            
             foreach (var t in envioList)
             {
                 Console.WriteLine(t.CodSwap);
                 testData.Add( new object[]{t.CodSwap, t.DtReference, t.ValorAtivo, t.ValorPassivo, t.TipoCotacao, t.Observacao});
                
             }
-            
+           excelWorksheet.Cells[$"B2:B${testData.Count + 1}"].Style.Numberformat.Format = "ddd-mm-dd";
            excelWorksheet.Cells[2, 1].LoadFromArrays(testData);    
             
 
-            FileInfo excelFile = new FileInfo(@"diretorio");
+            FileInfo excelFile = new FileInfo(@"C:\Users\almei\Documents\teste-excel\test.xlsx");
             excel.SaveAs(excelFile);
         }
 
